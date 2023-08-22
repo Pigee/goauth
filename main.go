@@ -6,7 +6,7 @@ import (
 	"github.com/redis/go-redis/v9"
         "net/http"
         "encoding/json"
- 	"crypto/sha256"
+ 	"crypto/sha512"
 
 )
 
@@ -30,7 +30,10 @@ func main() {
 	}
 	setHash(at)
 	getHash(at)
-        WebServerBase()
+        fmt.Printf("%x",sha512.Sum512([]byte("fdfdfd")))
+        //fmt.Println(string(sha512.Sum512([]byte("fdfdfd"))))
+	fmt.Println("\n")
+        // WebServerBase()
 }
 
 func WebServerBase() {
@@ -65,7 +68,9 @@ func getHash(a Authstr) (v string) {
 	val2, err := rdb.Get(ctx, a.Id).Result()
 	if err == redis.Nil {
 		fmt.Println("key2 does not exist,return random sha code")
-                return sha256.Sum256("Keys does not exist")
+               // return sha512.Sum512([]byte("Keys does not exist"))
+                return "fdfdfd"
+
 	} else if err != nil {
 		panic(err)
 	} else {
